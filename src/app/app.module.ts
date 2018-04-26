@@ -4,15 +4,19 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { FbLoginComponent } from './components/fb-login/fb-login.component';
 
+import { FacebookModule } from 'ngx-facebook';
 
 @NgModule({
   declarations: [
-    AppComponent
-  ],
+    AppComponent,
+    FbLoginComponent
+    ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FacebookModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
