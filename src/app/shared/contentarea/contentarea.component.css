@@ -1,0 +1,18 @@
+#contentarea {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    margin: 51px 0 0 0;
+}
+
+.block {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+.block h1 {
+    text-transform: uppercase;
+}
+.btn-fbloginbtn{
+    margin: 0 0 30px 0;
+}
+
