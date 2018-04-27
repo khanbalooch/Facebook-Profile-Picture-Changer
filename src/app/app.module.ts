@@ -10,6 +10,7 @@ import { FbLoginComponent } from './components/fb-login/fb-login.component';
 import { FacebookModule } from 'ngx-facebook';
 import { ContentareaComponent } from './shared/contentarea/contentarea.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { ShowProfileComponent } from './components/show-profile/show-profile.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FooterComponent } from './shared/footer/footer.component';
     HeaderComponent,
     FbLoginComponent,
     ContentareaComponent,
-    FooterComponent
+    FooterComponent,
+    ShowProfileComponent
   ],
 
   imports: [
