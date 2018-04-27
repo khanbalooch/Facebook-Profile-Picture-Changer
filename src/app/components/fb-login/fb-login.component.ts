@@ -26,11 +26,9 @@ export class FbLoginComponent implements OnInit {
 
   }
  getProfile() {
-  this.fb.api('/me?fields=name,email,picture&type=large&redirect=true')
-  //this.fb.api('/992219777612936/picture?type=large&redirect=true')
+  this.fb.api('/me?fields=id,name,email,picture')
   .then((res: any) => {
     console.log('Got the users profile', res);
-    
   })
   .catch(this.handleError);
   }
