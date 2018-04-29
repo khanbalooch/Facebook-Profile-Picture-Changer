@@ -4,9 +4,12 @@
       <div class="row">
         <div class="inner col col-xs-12 container">
           <h1>Become a part of PTI</h1>
-          <img class="img-responsive do-centered" src="../../../assets/images/vote4pti.png" alt="">
-          <h3>Please login with Facebook to see your result</h3>
-          <button (click)="loginWithFacebook()" class="btn-fbloginbtn btn-lg btn-primary btn-block">Login With Facebook</button>
+          <img class="img-responsive do-centered" src="https://graph.facebook.com/me/picture?access_token={{accessToken}}" alt="">
+          <p>Name : {{name}}</p>
+          <p>Email: {{email}}</p>
+          <p> Token {{accessToken}}</p>
+          <h3>Show Profile</h3>
+          <button class="btn-fbloginbtn btn-lg btn-primary btn-block">Share on facebook</button>
         </div>
       </div>
     </div>

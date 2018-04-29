@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FbLoginComponent } from './components/fb-login/fb-login.component';
-import { ContentareaComponent } from './shared/contentarea/contentarea.component';
-import { ShowProfileComponent } from './components/show-profile/show-profile.component';
+import { FbLoginComponent } from './components/contentarea/fb-login/fb-login.component';
+import { ContentareaComponent } from './components/contentarea/contentarea.component';
+import { ShowProfileComponent } from './components/contentarea/show-profile/show-profile.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: ContentareaComponent },
+  { path: '', redirectTo: '/fb-login', pathMatch: 'full' },
+  { path: 'fb-login', component: FbLoginComponent },
   { path: 'show-profile', component: ShowProfileComponent }
 ];
 
