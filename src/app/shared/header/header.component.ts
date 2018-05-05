@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    $(function () {
+    /*$(function () {
 
       $('a[href*=#]:not([href=#])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
         }
       });
 
-    });
+    });*/
 
 
   }
