@@ -19,14 +19,9 @@ export class FbLoginComponent implements OnInit {
     private fb: FacebookService,
     private router: Router,
     private tokenService: TokenService) {
-<<<<<<< HEAD
-  this.imagePath = '../../../assets/images/vote4pti.png';
-  const initParams: InitParams = { appId: '225148018254033', xfbml: true, version: 'v3.0' };
-=======
 
   this.user = new User('-', '-', '-', '-', '-', '-');
   const initParams: InitParams = { appId: '1251488264984736', xfbml: true, version: 'v3.0' };
->>>>>>> 481e9b285749b86d9ecfdaf155a51408fe94e633
 
   this.fb.init(initParams);
   }
