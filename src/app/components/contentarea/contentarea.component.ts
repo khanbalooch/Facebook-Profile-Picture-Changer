@@ -14,5 +14,4 @@ export class ContentareaComponent implements OnInit {
   ngOnInit() {
     this.tokenService.currentToken.subscribe(token => this.token = token);
   }
-
 }
