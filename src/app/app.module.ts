@@ -11,9 +11,8 @@ import { FacebookModule } from 'ngx-facebook';
 import { ContentareaComponent } from './components/contentarea/contentarea.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ShowProfileComponent } from './components/contentarea/show-profile/show-profile.component';
-import { HttpModule } from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { TokenService } from './shared/services/token.service';
-
 
 @NgModule({
   declarations: [
