@@ -21,7 +21,7 @@ export class FbLoginComponent implements OnInit {
     private tokenService: TokenService) {
 
   this.user = new User('-', '-', '-', '-', '-', '-');
-  const initParams: InitParams = { appId: '1251488264984736', xfbml: true, version: 'v3.0' };
+    const initParams: InitParams = { appId: '225148018254033', xfbml: true, version: 'v3.0' };
 
   this.fb.init(initParams);
   }
@@ -77,17 +77,6 @@ getProfilePictureAlbum() {
   });
 }
 /*===================================================GET_IMAGE===============*/
-<<<<<<< HEAD
-  getImage() {
-    const instance: FbLoginComponent = this;
-    this.fb.api(this.imageID + '?fields=picture&access_token=' + this.accessToken).then(
-      function (response) {
-        instance.imagePath = 'https://graph.facebook.com/' + instance.imageID + '/picture?type=normal&access_token=' + instance.accessToken;
-        console.log(instance.imagePath);
-      }
-    );
-  }
-=======
 getImage() {
   // instance.imagePath = 'https://graph.facebook.com/' + instance.imageID + '/picture?type=normal&access_token=' + instance.accessToken;
   this.user.profilePicture = 'https://graph.facebook.com/' + this.user.profilePictureID + '/picture?type=normal&access_token=' + this.user.accessToken;
@@ -102,7 +91,6 @@ getImage() {
     }
   );*/
 }
->>>>>>> 481e9b285749b86d9ecfdaf155a51408fe94e633
 /*===================================================HANDLE_ERROR===============*/
   private handleError(error) {
     console.error('Error processing action', error);
