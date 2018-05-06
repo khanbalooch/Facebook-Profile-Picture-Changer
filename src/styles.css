@@ -3,3 +3,12 @@
     float: none !important;
     margin: 0 auto !important;
 }
+.header-margin {
+    margin: 50px 0 0 0;
+    display: block;
+}
+.header-margin::after{
+    display: block;
+    overflow: hidden;
+    clear: both;
+}
