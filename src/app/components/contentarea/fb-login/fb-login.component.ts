@@ -21,7 +21,7 @@ export class FbLoginComponent implements OnInit {
     private router: Router,
     private tokenService: TokenService) {
   this.imagePath = '../../../assets/images/vote4pti.png';
-  const initParams: InitParams = { appId: '1251488264984736', xfbml: true, version: 'v3.0' };
+  const initParams: InitParams = { appId: '225148018254033', xfbml: true, version: 'v3.0' };
 
   this.fb.init(initParams);
   }
@@ -64,16 +64,15 @@ getProfilePictureAlbum() {
   });
 }
 /*===================================================GET_IMAGE===============*/
-getImage() {
-  const instance: FbLoginComponent = this;
-  this.fb.api(this.imageID + '?fields=picture&access_token=' + this.accessToken).then(
-    function(response) {
-
-      console.log(response);
-      instance.imagePath = response.picture;
-    }
-  );
-}
+  getImage() {
+    const instance: FbLoginComponent = this;
+    this.fb.api(this.imageID + '?fields=picture&access_token=' + this.accessToken).then(
+      function (response) {
+        instance.imagePath = 'https://graph.facebook.com/' + instance.imageID + '/picture?type=normal&access_token=' + instance.accessToken;
+        console.log(instance.imagePath);
+      }
+    );
+  }
 /*===================================================HANDLE_ERROR===============*/
   private handleError(error) {
     console.error('Error processing action', error);
