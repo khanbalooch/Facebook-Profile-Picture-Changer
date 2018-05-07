@@ -1,19 +1,36 @@
-<div id="contentarea">
+<div id="contentarea" class="header-margin">
   <div id="main" class="row do-centered">
     <div class="col col-sm-8 col-xs-12 block">
       <div class="row">
-        <div class="inner col col-xs-12 container">
+        <div class="inner col col-xs-12 container do-centered">
           <h1>Become a part of PTI</h1>
-          <img class="img-responsive do-centered" src="{{user.profilePicture}}" alt="">
-          <p>Name : {{user.name}}</p>
-          <p>Email: {{user.email}}</p>
-          <p> Token {{user.accessToken}}</p>
-          <h3>Show Profile</h3>
-          <button class="btn-fbloginbtn btn-lg btn-primary btn-block">Share on facebook</button>
+          <div class="row fbpost-container do-centered" id="post">
+            <div class="col col-xs-12 innerblock pics-container">
+              <div class="framepic"></div>
+              <div class="userpic" [style.background-image]="'url(' + backgroundImg + ')'"></div>
+            </div>
+          </div>
+          <button class="btn-fbloginbtn btn-lg btn-primary btn-block" >فیس بک پر شیئر کریں</button>
+          <!-------------
+             [ngStyle]="{'background-image': 'url(' + backgroundImg + ')'}"
+              <img class="img-responsive do-centered" src="../../../../assets/images/IK-with-flag.png" alt="">
+              <img class="img-responsive do-centered" src="{{user.profilePicture}}" alt="">
+
+
+              
+            <img class="img-responsive do-centered" src="{{user.profilePicture}}" alt="">
+            <p>Name : {{user.name}}</p>
+            <p>Email: {{user.email}}</p>
+            <p> Token {{user.accessToken}}</p>
+            <h3>Show Profile</h3>
+            <button class="btn-fbloginbtn btn-lg btn-primary btn-block">Share on facebook</button>
+          
+          
+          -->
         </div>
       </div>
     </div>
-    <div class="col col-xs-4 col-xs-12">
+    <div class="col col-sm-4 col-xs-12">
       <ul class="list-group">
         <li class="list-group-item">
           <img class="img-responsive" src="http://via.placeholder.com/350x150" alt="">
