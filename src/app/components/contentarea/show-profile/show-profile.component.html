@@ -10,23 +10,7 @@
               <div class="userpic" [style.background-image]="'url(' + backgroundImg + ')'"></div>
             </div>
           </div>
-          <button class="btn-fbloginbtn btn-lg btn-primary btn-block" >فیس بک پر شیئر کریں</button>
-          <!-------------
-             [ngStyle]="{'background-image': 'url(' + backgroundImg + ')'}"
-              <img class="img-responsive do-centered" src="../../../../assets/images/IK-with-flag.png" alt="">
-              <img class="img-responsive do-centered" src="{{user.profilePicture}}" alt="">
-
-
-              
-            <img class="img-responsive do-centered" src="{{user.profilePicture}}" alt="">
-            <p>Name : {{user.name}}</p>
-            <p>Email: {{user.email}}</p>
-            <p> Token {{user.accessToken}}</p>
-            <h3>Show Profile</h3>
-            <button class="btn-fbloginbtn btn-lg btn-primary btn-block">Share on facebook</button>
-          
-          
-          -->
+          <button class="btn-fbloginbtn btn-lg btn-primary btn-block" (click)="shareOnFacebook()"  >فیس بک پر شیئر کریں</button>
         </div>
       </div>
     </div>

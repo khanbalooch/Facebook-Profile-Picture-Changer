@@ -21,7 +21,7 @@
 
 .framepic {
     background-image: url('../../../../assets/images/IK-with-flag.png');
-    z-index: 999999999999999999999;
+    z-index: 99;
 }
 
 .userpic {
