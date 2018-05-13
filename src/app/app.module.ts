@@ -14,6 +14,7 @@ import { ShowProfileComponent } from './components/contentarea/show-profile/show
 import { HttpModule, JsonpModule } from '@angular/http';
 import { TokenService } from './shared/services/token.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,

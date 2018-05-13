@@ -21,7 +21,7 @@ export class FbLoginComponent implements OnInit {
     private tokenService: TokenService) {
 
   this.user = new User('-', '-', '-', '-', '-', '-');
-    const initParams: InitParams = { appId: '1251488264984736', xfbml: true, version: 'v3.0' };
+    const initParams: InitParams = { appId: '363704334140605', xfbml: true, version: 'v3.0' };
 
   this.fb.init(initParams);
   }

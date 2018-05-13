@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
 import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
+import * as html2canvas from 'html2canvas';
+import { post } from 'selenium-webdriver/http';
+
+
 @Component({
   selector: 'app-show-profile',
   templateUrl: './show-profile.component.html',
@@ -22,6 +26,8 @@ export class ShowProfileComponent implements OnInit {
   ngOnInit() {
     this.backgroundImg = this.user.profilePicture;
   }
+  
+
 /*===========================================================SHARE_ON_FACEBOOK==========================*/
   shareOnFacebook() {
       const params: UIParams = {
