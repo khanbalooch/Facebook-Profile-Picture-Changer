@@ -1,3 +1,11 @@
+#contentarea {
+    margin: auto;
+    max-width: 1236px;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow: hidden;
+}
+
 #post {
     display: block;
     margin-bottom: 30px !important;
@@ -20,14 +28,15 @@
 }
 
 .framepic {
-    background-image: url('../../../../assets/images/IK-with-flag.png');
+    /*background-image: url('../../../../assets/images/IK-with-flag.png');*/
     z-index: 99;
 }
 
 .userpic {
-    background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: top;
+    z-index: 98;
 }
 
 .pics-container {
@@ -51,6 +60,23 @@
     left: 0;
     right: 0;
 }
+
+#postContainer {
+    display: block;
+    width: 100%;
+}
+#postContainer::after,#postContainer::before{
+    display: block;
+    width: 100%;
+    clear: both;
+    overflow: hidden;
+}
+    @media screen and (max-width:1250px) {
+        #postCanv{
+            width: 100% !important;
+            height: auto !important;
+        }
+    }
 
 @media screen and (max-width:767px) {
     ul.list-group {
