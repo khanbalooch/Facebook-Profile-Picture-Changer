@@ -10,7 +10,16 @@
               <div class="userpic" [style.background-image]="'url(' + backgroundImg + ')'"></div>
             </div>
           </div>
-          <button class="btn-fbloginbtn btn-lg btn-primary btn-block" (click)="shareOnFacebook()"  >فیس بک پر شیئر کریں</button>
+          <canvas id='canvas' width="600" height="600"></canvas>
+          <!--<div class="row fbpost-container do-centered" id="post">
+            <div class="col col-xs-12 innerblock pics-container">
+              <img class="imgA1" src="{{user.profilePicture}}" crossorigin="anonymous">
+              <img class="imgB1" src="../../../../assets/images/IK-with-flag.png">
+              <canvas id='canvas' width="600" height="600"></canvas>
+            </div>
+          </div>-->
+            
+          <button class="btn-fbloginbtn btn-lg btn-primary btn-block" (click)="loadImage()"  >فیس بک پر شیئر کریں</button>
         </div>
       </div>
     </div>

@@ -21,7 +21,7 @@ export class FbLoginComponent implements OnInit {
     private tokenService: TokenService) {
 
   this.user = new User('-', '-', '-', '-', '-', '-');
-    const initParams: InitParams = { appId: '363704334140605', xfbml: true, version: 'v3.0' };
+    const initParams: InitParams = { appId: '1251488264984736', xfbml: true, version: 'v3.0' };
 
   this.fb.init(initParams);
   }
@@ -55,7 +55,7 @@ getUserNameAndEmail() {
       instance.user.name = response.name;
       instance.user.email = response.email;
       instance.getProfilePictureAlbum();
-      console.log(response);
+      //console.log(response);
   });
 }
 
@@ -80,7 +80,7 @@ getProfilePictureAlbum() {
 getImage() {
   // instance.imagePath = 'https://graph.facebook.com/' + instance.imageID + '/picture?type=normal&access_token=' + instance.accessToken;
   this.user.profilePicture = 'https://graph.facebook.com/' + this.user.profilePictureID + '/picture?type=normal&access_token=' + this.user.accessToken;
-
+  console.log(this.user.profilePicture);
   this.tokenService.changeToken( JSON.stringify(this.user) );
   this.router.navigateByUrl('show-profile');
 

@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
 import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
-import * as html2canvas from 'html2canvas';
-import { post } from 'selenium-webdriver/http';
-
+// import mergeImages from 'merge-images';
+// import * as html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-show-profile',
@@ -26,8 +25,14 @@ export class ShowProfileComponent implements OnInit {
   ngOnInit() {
     this.backgroundImg = this.user.profilePicture;
   }
-  
 
+  /*loadImage() {
+    mergeImages([ this.user.profilePicture, '../../../../assets/images/IK-with-flag.png'])
+    .then(b64 => document.querySelector('img').src = b64);
+  }*/
+/*===========================================================DOWNLOAD_IMAGE==========================*/
+  loadImage() {
+  }
 /*===========================================================SHARE_ON_FACEBOOK==========================*/
   shareOnFacebook() {
       const params: UIParams = {
