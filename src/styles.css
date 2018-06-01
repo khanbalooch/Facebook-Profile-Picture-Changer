@@ -12,3 +12,10 @@
     overflow: hidden;
     clear: both;
 }
+#contentarea {
+    margin: auto;
+    max-width: 1236px;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow: hidden;
+}

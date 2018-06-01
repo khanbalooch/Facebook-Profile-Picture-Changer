@@ -4,22 +4,20 @@
       <div class="row">
         <div class="inner col col-xs-12 container do-centered">
           <h1>Become a part of PTI</h1>
-          <div class="row fbpost-container do-centered" id="post">
-            <div class="col col-xs-12 innerblock pics-container">
-              <div class="framepic"></div>
-              <div class="userpic" [style.background-image]="'url(' + backgroundImg + ')'"></div>
-            </div>
+          <div id="postContainer" >
+            <canvas id="postCanv" width="800" height="400" style="border:1px solid #d3d3d3;">
+              Your browser does not support the HTML5 canvas tag.
+            </canvas>
           </div>
-          <canvas id='canvas' width="600" height="600"></canvas>
-          <!--<div class="row fbpost-container do-centered" id="post">
-            <div class="col col-xs-12 innerblock pics-container">
-              <img class="imgA1" src="{{user.profilePicture}}" crossorigin="anonymous">
-              <img class="imgB1" src="../../../../assets/images/IK-with-flag.png">
-              <canvas id='canvas' width="600" height="600"></canvas>
+          <!--
+            <div class="row fbpost-container do-centered" id="post-container__">
+              <div class="col col-xs-12 innerblock pics-container" id="post-container">
+                <div class="userpic" [style.background-image]="'url(' + backgroundImg + ')'"></div>
+                <div class="framepic" [style.background-image]="'url(../../../../assets/images/IK-with-flag.png)'"></div>
+              </div>
             </div>
-          </div>-->
-            
-          <button class="btn-fbloginbtn btn-lg btn-primary btn-block" (click)="loadImage()"  >فیس بک پر شیئر کریں</button>
+          -->
+          <button class="btn-fbloginbtn btn-lg btn-primary btn-block" (click)="shareOnFacebook()">فیس بک پر شیئر کریں</button>
         </div>
       </div>
     </div>

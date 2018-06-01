@@ -7,7 +7,9 @@ import { ShowProfileComponent } from './components/contentarea/show-profile/show
 const routes: Routes = [
   { path: '', redirectTo: '/fb-login', pathMatch: 'full' },
   { path: 'fb-login', component: FbLoginComponent },
-  { path: 'show-profile', component: ShowProfileComponent }
+  { path: 'show-profile', component: ShowProfileComponent },
+  { path: ':id', component: FbLoginComponent}
+
 ];
 
 @NgModule({
