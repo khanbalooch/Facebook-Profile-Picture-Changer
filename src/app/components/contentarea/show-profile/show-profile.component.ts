@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
 import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
+import { Base64 } from 'js-base64';
 import * as html2canvas from 'html2canvas';
 import { post } from 'selenium-webdriver/http';
 //import mergeImages from 'merge-images';
@@ -79,6 +80,49 @@ export class ShowProfileComponent implements OnInit {
 
 
 
+  /*
+  exportCanvasAsPNG(id, fileName) {
+
+    var canvasElement = document.getElementById(id) as HTMLCanvasElement;;
+
+    var MIME_TYPE = "image/png";
+
+    var imgURL = canvasElement.toDataURL(MIME_TYPE);
+    return imgURL;
+    /*
+        var dlLink = document.createElement('a');
+        dlLink.download = fileName;
+        dlLink.href = imgURL;
+        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
+    
+        document.body.appendChild(dlLink);
+        dlLink.click();
+        document.body.removeChild(dlLink);
+    
+  
+        *//*
+  }
+*/
+  // Converts canvas to an image
+  /*
+  convertCanvasToImage(canvas) {
+    var image = new Image();
+    return image.src = canvas.toDataURL("image/jpeg", 0.1);
+
+  }
+  */
+
+
+  //self try
+  /*
+  shareCanvFb(canvas: HTMLCanvasElement) {
+
+    return canvas.toDataURL("image/jpeg", 0.1);
+
+
+  }
+  */
+
 
 
 
@@ -87,17 +131,67 @@ export class ShowProfileComponent implements OnInit {
 
   /*===========================================================SHARE_ON_FACEBOOK==========================*/
   shareOnFacebook() {
- 
-    var data = $('#postCanv')[0].toDataURL("image/png");
-    try {
-      var blob = this.dataURItoBlob(data);
-      console.log(blob);
-    } catch (e) {
-      console.log(e);
+
+    /*
+    var canv = document.getElementById("postCanv") as HTMLCanvasElement;
+    var imgUrl = canv.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, '');
+    var imgUrl2 = canv.toDataURL('image/png');
+    var image = new Image();
+    image.src = imgUrl2;
+    document.body.appendChild(image);
+    */
+
+    var canv = document.getElementById("postCanv") as HTMLCanvasElement;
+    var dataURL  = canv.toDataURL('image/png');
+    var data = atob(dataURL.substring("data:image/png;base64,".length)),
+      asArray = new Uint8Array(data.length);
+    for (var i = 0, len = data.length; i < len; ++i) {
+      asArray[i] = data.charCodeAt(i);
     }
 
+    var blob = new Blob([asArray.buffer], { type: "image/png" });
+
+    console.log(blob);
+    var img = document.createElement("img");
+    img.src = (window.URL).createObjectURL(blob);
+    console.log(img.src);
+    //document.body.appendChild(img);
 
 
+
+    //var data = $('#postCanv')[0].toDataURL("image/png");
+   // try {
+
+      //var blob = this.dataURItoBlob(data);
+      //var file = new File([data], "testFname", { type: "image/png", lastModified: Date.now() });
+      //console.log(file);
+
+      // Make a Blob from the bytes
+      //var blob = new Blob([bytes], { type: 'image/bmp' });
+
+      // Use createObjectURL to make a URL for the blob
+      /*
+      var image = new Image();
+      image.src = URL.createObjectURL(blob);
+      document.body.appendChild(image);
+      */
+
+    //} catch (e) {
+      //console.log(e);
+    //}
+
+    //var postImg = this.exportCanvasAsPNG('postCanv','tst');
+    //var data = $('#postCanv')[0].toDataURL("image/png");
+    //var canv = document.getElementById("postCanv") as HTMLCanvasElement;
+    //var postImg = canv.toDataURL("image/png");
+    //var postImg = canv.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    //console.log(postImg);
+    //var postImg = this.convertCanvasToImage(canv);
+    //var postImg = this.shareCanvFb(canv);
+    //console.log(postImg);
+    // document.write('<img src="' + postImg + '"/>');
+
+    console.log(this.user.profilePicture);
     const params: UIParams = {
       method: 'share_open_graph',
       action_type: 'og.shares',
@@ -106,7 +200,9 @@ export class ShowProfileComponent implements OnInit {
           'og:url': 'https://uframe.wellupsolution.com',
           'og:title': 'My PM IS IMRAN KHAN',
           'og:description': 'VOTE FOR CHANGE',
-          'og:image': this.user.profilePicture
+          //'og:image': this.user.profilePicture
+          'og:image': img.src
+          
         }
       })
     };
@@ -116,17 +212,6 @@ export class ShowProfileComponent implements OnInit {
 
 
     });
-  }
-
-  shareOnFb() {
-    var data = $('#postCanv')[0].toDataURL("image/png");
-    try {
-      var blob = this.dataURItoBlob(data);
-      console.log(blob);
-    } catch (e) {
-      console.log(e);
-    }
-
   }
 
 
