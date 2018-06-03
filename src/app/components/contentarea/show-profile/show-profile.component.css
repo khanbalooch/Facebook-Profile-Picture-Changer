@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+img {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+  }
+  .imgA1 {
+    z-index: 1;
+  }
+  .imgB1 {
+    z-index: 3;
+  }
+=======
 #contentarea {
     margin: auto;
     max-width: 1236px;
@@ -6,6 +19,7 @@
     overflow: hidden;
 }
 
+>>>>>>> e383bf96011c09b0a58f7aa313e99c8493d33634
 #post {
     display: block;
     margin-bottom: 30px !important;

@@ -34,14 +34,13 @@ export class ShowProfileComponent implements OnInit {
 
     this.backgroundImg = this.user.profilePicture;
     this.combineImages();
-
-    //var frameImg  = '../../../../assets/images/IK-with-flag.png';
   }
+  /*===========================================================COMBINE_IMGES==================================*/
 
   combineImages() {
 
-    var c: any = document.getElementById("postCanv");
-    var ctx = c.getContext("2d");
+    var c: any = document.getElementById('postCanv');
+    var ctx = c.getContext('2d');
 
     var uImg = new Image;
     var frameImg = new Image;
@@ -62,12 +61,13 @@ export class ShowProfileComponent implements OnInit {
     uImg.src = this.user.profilePicture;
     frameImg.src = '../../../../assets/images/IK-with-flag.png';
 
-    uImg.crossOrigin = "Anonymous";
-    //frameImg.crossOrigin = "Anonymous";
+    uImg.crossOrigin = 'Anonymous';
+    // frameImg.crossOrigin = "Anonymous";
 
   }
 
-  /** */
+  /*===========================================================DATAURI_TO_BLOB==================================*/
+
   dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);
     var ab = new ArrayBuffer(byteString.length);
@@ -77,121 +77,17 @@ export class ShowProfileComponent implements OnInit {
     }
     return new Blob([ab], { type: 'image/png' });
   }
-
-
-
-  /*
-  exportCanvasAsPNG(id, fileName) {
-
-    var canvasElement = document.getElementById(id) as HTMLCanvasElement;;
-
-    var MIME_TYPE = "image/png";
-
-    var imgURL = canvasElement.toDataURL(MIME_TYPE);
-    return imgURL;
-    /*
-        var dlLink = document.createElement('a');
-        dlLink.download = fileName;
-        dlLink.href = imgURL;
-        dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
-    
-        document.body.appendChild(dlLink);
-        dlLink.click();
-        document.body.removeChild(dlLink);
-    
-  
-        *//*
-  }
-*/
-  // Converts canvas to an image
-  /*
-  convertCanvasToImage(canvas) {
-    var image = new Image();
-    return image.src = canvas.toDataURL("image/jpeg", 0.1);
-
-  }
-  */
-
-
-  //self try
-  /*
-  shareCanvFb(canvas: HTMLCanvasElement) {
-
-    return canvas.toDataURL("image/jpeg", 0.1);
-
-
-  }
-  */
-
-
-
-
-
-
-
   /*===========================================================SHARE_ON_FACEBOOK==========================*/
   shareOnFacebook() {
 
-    /*
-    var canv = document.getElementById("postCanv") as HTMLCanvasElement;
-    var imgUrl = canv.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, '');
-    var imgUrl2 = canv.toDataURL('image/png');
-    var image = new Image();
-    image.src = imgUrl2;
-    document.body.appendChild(image);
-    */
-
-    var canv = document.getElementById("postCanv") as HTMLCanvasElement;
-    var dataURL  = canv.toDataURL('image/png');
-    var data = atob(dataURL.substring("data:image/png;base64,".length)),
-      asArray = new Uint8Array(data.length);
-    for (var i = 0, len = data.length; i < len; ++i) {
-      asArray[i] = data.charCodeAt(i);
+    const data = $('#postCanv')[0].toDataURL('image/png');
+    try {
+      const blob = this.dataURItoBlob(data);
+      let result: File =  this.blobToFile(blob);
+    } catch (e) {
+      console.log(e);
     }
-
-    var blob = new Blob([asArray.buffer], { type: "image/png" });
-
-    console.log(blob);
-    var img = document.createElement("img");
-    img.src = (window.URL).createObjectURL(blob);
-    console.log(img.src);
-    //document.body.appendChild(img);
-
-
-
-    //var data = $('#postCanv')[0].toDataURL("image/png");
-   // try {
-
-      //var blob = this.dataURItoBlob(data);
-      //var file = new File([data], "testFname", { type: "image/png", lastModified: Date.now() });
-      //console.log(file);
-
-      // Make a Blob from the bytes
-      //var blob = new Blob([bytes], { type: 'image/bmp' });
-
-      // Use createObjectURL to make a URL for the blob
-      /*
-      var image = new Image();
-      image.src = URL.createObjectURL(blob);
-      document.body.appendChild(image);
-      */
-
-    //} catch (e) {
-      //console.log(e);
-    //}
-
-    //var postImg = this.exportCanvasAsPNG('postCanv','tst');
-    //var data = $('#postCanv')[0].toDataURL("image/png");
-    //var canv = document.getElementById("postCanv") as HTMLCanvasElement;
-    //var postImg = canv.toDataURL("image/png");
-    //var postImg = canv.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    //console.log(postImg);
-    //var postImg = this.convertCanvasToImage(canv);
-    //var postImg = this.shareCanvFb(canv);
-    //console.log(postImg);
-    // document.write('<img src="' + postImg + '"/>');
-
-    console.log(this.user.profilePicture);
+    
     const params: UIParams = {
       method: 'share_open_graph',
       action_type: 'og.shares',
@@ -200,22 +96,34 @@ export class ShowProfileComponent implements OnInit {
           'og:url': 'https://uframe.wellupsolution.com',
           'og:title': 'My PM IS IMRAN KHAN',
           'og:description': 'VOTE FOR CHANGE',
-          //'og:image': this.user.profilePicture
-          'og:image': img.src
-          
+          'og:image': 'https://' + window.location.hostname + '/assets/images/IK-with-flag.png'
         }
       })
     };
-
     this.fb.ui(params).then(function (response: UIResponse) {
       console.log(response);
-
-
     });
   }
+  /*===========================================================NG_ON_INIT==================================*/
+  shareOnFb() {
+    var data = $('#postCanv')[0].toDataURL('image/png');
+    try {
+      var blob = this.dataURItoBlob(data);
+      console.log(blob);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  /*===========================================================UPLOAD_STORY===============================*/
 
+  public blobToFile = (theBlob: Blob): File => {
+    const b: any = theBlob;
+    // A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = 'result.png';
 
-
-
+    // Cast to a File() type
+    return <File>theBlob;
+  }
   /*===========================================================END_OF_CLASS===============================*/
 }

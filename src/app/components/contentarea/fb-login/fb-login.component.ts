@@ -3,7 +3,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
 import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
-import { get } from 'selenium-webdriver/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-fb-login',
@@ -14,13 +14,18 @@ export class FbLoginComponent implements OnInit {
 
 /*===================================================MEMBER VARIABLES===============*/
   private user: User;
+  private fbApi = 'https://test-205317.appspot.com';
+  private gcsBucket = 'https://storage.googleapis.com/test-205317/';
 /*===================================================CONSTRUCTOR====================*/
   constructor(
     private fb: FacebookService,
     private router: Router,
+    private http: HttpClient,
     private tokenService: TokenService) {
 
   this.user = new User('-', '-', '-', '-', '-', '-');
+      //363704334140605
+      //1251488264984736
     const initParams: InitParams = { appId: '363704334140605', xfbml: true, version: 'v3.0' };
 
   this.fb.init(initParams);
@@ -33,67 +38,39 @@ export class FbLoginComponent implements OnInit {
 
     const instance: FbLoginComponent = this;
 
-    this.fb.login({scope: 'email,user_photos,user_gender'})
+    this.fb.login({scope: 'email,user_photos'})
       .then( function (response: LoginResponse) {
 
         if (response.status === 'connected') {
 
           instance.user.accessToken = response.authResponse.accessToken;
           instance.user.userID = response.authResponse.userID;
-          instance.getUserNameAndEmail();
-          //instance.getProfilePictureAlbum();
-          // instance.router.navigateByUrl('show-profile');
+          instance.newUser();
       }
       });
   }
 
 /*===================================================GET PROFILE PIC ALBUM======*/
 
-getUserNameAndEmail() {
+newUser() {
   const instance: FbLoginComponent = this;
- this.fb.api('me?fields=name,email').then(function(response) {
-      instance.user.name = response.name;
-      instance.user.email = response.email;
-      instance.getProfilePictureAlbum();
-      console.log(response);
-  });
+  this.http.get(this.fbApi + '/newUser/' + this.user.userID + '/' + this.user.accessToken,
+  {
+     responseType: 'text' 
+  }  
+)
+  .subscribe(
+    data => {
+      this.user.profilePicture =  this.gcsBucket + this.user.userID + '.jpg';
+      console.log(this.user);
+      this.tokenService.changeToken( JSON.stringify(this.user) );
+      this.router.navigateByUrl('show-profile');
+    });
 }
 
-/*===================================================GET PROFILE PIC ALBUM======*/
-
-getProfilePictureAlbum() {
-  const instance: FbLoginComponent = this;
-  this.fb.api('/' + this.user.userID + '/albums').then(function(response) {
-
-    if (response.data[0].name === 'Profile Pictures') {
-
-      // Get a list of all photos in that album.
-      instance.fb.api(response.data[0].id + '/photos?fields=link').then( function(response1) {
-
-        instance.user.profilePictureID = response1.data[0].id;
-        instance.getImage();
-      });
-    }
-  });
-}
-/*===================================================GET_IMAGE===============*/
-getImage() {
-  // instance.imagePath = 'https://graph.facebook.com/' + instance.imageID + '/picture?type=normal&access_token=' + instance.accessToken;
-  this.user.profilePicture = 'https://graph.facebook.com/' + this.user.profilePictureID + '/picture?type=normal&access_token=' + this.user.accessToken;
-
-  this.tokenService.changeToken( JSON.stringify(this.user) );
-  this.router.navigateByUrl('show-profile');
-
-  /*this.fb.api(this.imageID + '?fields=picture&access_token=' + this.accessToken).then(
-    function(response) {
-
-      console.log(instance.imagePath);
-    }
-  );*/
-}
 /*===================================================HANDLE_ERROR===============*/
   private handleError(error) {
-    console.error('Error processing action', error);
+    console.error('Error processing action:', error);
   }
 /*===================================================END OF CLASS===============*/
 }
