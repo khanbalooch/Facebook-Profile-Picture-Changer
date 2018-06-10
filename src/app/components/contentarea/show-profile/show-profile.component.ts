@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
 import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
+import { HttpClient } from '@angular/common/http';
+
 declare var jquery: any;
 declare var $: any;
 
@@ -20,7 +22,9 @@ export class ShowProfileComponent implements OnInit {
   user: User;
 
   /*===========================================================CONSTRUCTOR=================================*/
-  constructor(private tokenService: TokenService, private fb: FacebookService) {
+  constructor(private tokenService: TokenService,
+              private fb: FacebookService,
+              private http: HttpClient) {
 
     this.tokenService.currentToken.subscribe(token => this.user = User.parse(token));
   }
@@ -34,11 +38,11 @@ export class ShowProfileComponent implements OnInit {
 
   combineImages() {
 
-    var c: any = document.getElementById('postCanv');
-    var ctx = c.getContext('2d');
+    const c: any = document.getElementById('postCanv');
+    const ctx = c.getContext('2d');
 
-    var uImg = new Image;
-    var frameImg = new Image;
+    const uImg = new Image;
+    const frameImg = new Image;
 
     uImg.onload = function () {
       ctx.drawImage(uImg, 0, 0, uImg.width, uImg.height,     // source rectangle
@@ -64,25 +68,16 @@ export class ShowProfileComponent implements OnInit {
   /*===========================================================DATAURI_TO_BLOB==================================*/
 
   dataURItoBlob(dataURI) {
-    var byteString = atob(dataURI.split(',')[1]);
-    var ab = new ArrayBuffer(byteString.length);
-    var ia = new Uint8Array(ab);
-    for (var i = 0; i < byteString.length; i++) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
     return new Blob([ab], { type: 'image/png' });
   }
   /*===========================================================SHARE_ON_FACEBOOK==========================*/
   shareOnFacebook() {
-
-    const data = $('#postCanv')[0].toDataURL('image/png');
-    try {
-      const blob = this.dataURItoBlob(data);
-      let result: File =  this.blobToFile(blob);
-    } catch (e) {
-      console.log(e);
-    }
-    
     const params: UIParams = {
       method: 'share_open_graph',
       action_type: 'og.shares',
@@ -91,7 +86,7 @@ export class ShowProfileComponent implements OnInit {
           'og:url': 'https://uframe.wellupsolution.com',
           'og:title': 'My PM IS IMRAN KHAN',
           'og:description': 'VOTE FOR CHANGE',
-          'og:image': 'https://' + window.location.hostname + '/assets/images/IK-with-flag.png'
+          'og:image': 'https://storage.googleapis.com/test-205317/' + this.user.userID + '.jpg'
         }
       })
     };
@@ -101,9 +96,9 @@ export class ShowProfileComponent implements OnInit {
   }
   /*===========================================================NG_ON_INIT==================================*/
   shareOnFb() {
-    var data = $('#postCanv')[0].toDataURL('image/png');
+    const data = $('#postCanv')[0].toDataURL('image/png');
     try {
-      var blob = this.dataURItoBlob(data);
+      const blob = this.dataURItoBlob(data);
       console.log(blob);
     } catch (e) {
       console.log(e);
@@ -120,5 +115,24 @@ export class ShowProfileComponent implements OnInit {
     // Cast to a File() type
     return <File>theBlob;
   }
+   /*===========================================================UPLOAD_STORY===============================*/
+   saveImage() {
+    let  blob;
+    const data = $('#postCanv')[0].toDataURL('image/png');
+    try {
+      blob = this.dataURItoBlob(data);
+      const result: File =  this.blobToFile(blob);
+    } catch (e) {
+      console.log(e);
+    }
+    console.log('blob:' + blob);
+    const formData = new FormData();
+    formData.set('upl', blob);
+    this.http.post('https://test-205317.appspot.com/uploadImage', formData).subscribe(
+      function(reponse) {
+          this.shareOnFacebook();
+      }
+    );
+   }
   /*===========================================================END_OF_CLASS===============================*/
 }

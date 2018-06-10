@@ -3,7 +3,7 @@ import { RouterModule, Router } from '@angular/router';
 import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
 import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-fb-login',
@@ -24,7 +24,7 @@ export class FbLoginComponent implements OnInit {
     private tokenService: TokenService) {
 
   this.user = new User('-', '-', '-', '-', '-', '-');
-    const initParams: InitParams = { appId: '1251488264984736', xfbml: true, version: 'v3.0' };
+    const initParams: InitParams = { appId: '446446099144129', xfbml: true, version: 'v3.0' };
 
   this.fb.init(initParams);
   }
@@ -64,7 +64,6 @@ newUser() {
       this.router.navigateByUrl('show-profile');
     });
 }
-
 /*===================================================HANDLE_ERROR===============*/
   private handleError(error) {
     console.error('Error processing action:', error);
