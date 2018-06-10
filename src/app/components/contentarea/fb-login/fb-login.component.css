@@ -1,3 +1,12 @@
+fa[name="refresh"] {
+    display: none;
+}
+.on-wait {
+    display: inline-block !important;
+    vertical-align: middle;
+    cursor: not-allowed;
+}
+
 @media screen and (max-width:767px) {
     ul.list-group {
         display: block;
@@ -12,7 +21,6 @@
         width: 50%;
     }
 }
-
 @media screen and (max-width:480px) {
     ul > li.list-group-item {
         width: 98%;

@@ -15,6 +15,8 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { TokenService } from './shared/services/token.service';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    AngularFontAwesomeModule
   ],
   providers: [TokenService],
   bootstrap: [AppComponent]

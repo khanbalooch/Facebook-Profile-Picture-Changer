@@ -5,6 +5,9 @@ import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
 import { HttpClient } from '@angular/common/http';
 
+declare var jquery: any;
+declare var $: any;
+
 @Component({
   selector: 'app-fb-login',
   templateUrl: './fb-login.component.html',
@@ -12,10 +15,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FbLoginComponent implements OnInit {
 
+  
+
 /*===================================================MEMBER VARIABLES===============*/
   private user: User;
+  flag = false;
   private fbApi = 'https://test-205317.appspot.com';
   private gcsBucket = 'https://storage.googleapis.com/test-205317/';
+  isActive:boolean = false;
 /*===================================================CONSTRUCTOR====================*/
   constructor(
     private fb: FacebookService,
@@ -24,8 +31,7 @@ export class FbLoginComponent implements OnInit {
     private tokenService: TokenService) {
 
   this.user = new User('-', '-', '-', '-', '-', '-');
-      //363704334140605
-      //1251488264984736
+      
     const initParams: InitParams = { appId: '363704334140605', xfbml: true, version: 'v3.0' };
 
   this.fb.init(initParams);
@@ -33,9 +39,29 @@ export class FbLoginComponent implements OnInit {
 /*===================================================NG_ON_INIT======================*/
   ngOnInit() {
   }
+
+  /*====================================Loading icon on Login Button================ */
+  onWait(){
+    return this.flag == true ?  'on-wait' : '';
+  }
+  
 /*===================================================LOGIN_WITH_FACEBOOK=============*/
   loginWithFacebook(): void {
-
+    this.flag = true;
+    
+    
+    
+    /*
+    $("").appendTo(".btn-fbloginbtn");
+    $( "p" ).append( "<strong>Hello</strong>" );
+    $('#loginBtn').append("fa").attr("name", "ellipsis-v").attr("animation", "spin");
+      var loadSpan = document.createElement("span").appendChild(document.createTextNode('انتظارکیجے '));
+    document.getElementById('loginBtn').appendChild(loadSpan);
+   
+    <fa name='ellipsis-v' animation='spin'></fa>
+    */
+    
+    
     const instance: FbLoginComponent = this;
 
     this.fb.login({scope: 'email,user_photos'})

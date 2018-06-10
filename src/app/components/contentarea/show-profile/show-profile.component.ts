@@ -33,7 +33,8 @@ export class ShowProfileComponent implements OnInit {
   ngOnInit() {
 
     this.backgroundImg = this.user.profilePicture;
-    this.combineImages();
+    //this.combineImages();
+    this.mergeTwoImg();
   }
   /*===========================================================COMBINE_IMGES==================================*/
 
@@ -42,29 +43,40 @@ export class ShowProfileComponent implements OnInit {
     var c: any = document.getElementById('postCanv');
     var ctx = c.getContext('2d');
 
-    var uImg = new Image;
-    var frameImg = new Image;
+    var uImg = new Image();
+    var frameImg = new Image();
 
     uImg.onload = function () {
       ctx.drawImage(uImg, 0, 0, uImg.width, uImg.height,     // source rectangle
         0, 0, c.width, c.height); // destination rectangle
-      ctx.drawImage(frameImg, 0, 0, frameImg.width, frameImg.height,     // source rectangle
+      ctx.drawImage(frameImg, 10, 10, frameImg.width, frameImg.height,     // source rectangle
         0, 0, c.width, c.height); // destination rectangle
     };
-    /*
-    frameImg.onload = function () {
-      ctx.drawImage(frameImg, 0, 0, frameImg.width, frameImg.height,     // source rectangle
-        0, 0, c.width, c.height); // destination rectangle
-    };
-    */
-
     uImg.src = this.user.profilePicture;
     frameImg.src = '../../../../assets/images/IK-with-flag.png';
 
     uImg.crossOrigin = 'Anonymous';
     // frameImg.crossOrigin = "Anonymous";
-
   }
+
+  mergeTwoImg(){
+    var c: any = document.getElementById("postCanv");
+    var ctx = c.getContext("2d");
+    var imageObj1 = new Image();
+    var imageObj2 = new Image();
+    imageObj1.src = this.user.profilePicture;
+    imageObj1.onload = function () {
+      ctx.drawImage(imageObj1, 0, 0, imageObj1.width, imageObj1.height,0 , 0 , c.width,c.height);
+      imageObj2.src = '../../../../assets/images/IK-with-flag.png';
+      imageObj2.onload = function () {
+        ctx.drawImage(imageObj2, 0, 0, imageObj2.width,imageObj2.height,0,0,c.width,c.height);
+        //var img = c.toDataURL("image/png");
+       // document.write('<img src="' + img + '" width="328" height="526"/>');
+      }
+    };
+  }
+
+
 
   /*===========================================================DATAURI_TO_BLOB==================================*/
 
@@ -83,11 +95,11 @@ export class ShowProfileComponent implements OnInit {
     const data = $('#postCanv')[0].toDataURL('image/png');
     try {
       const blob = this.dataURItoBlob(data);
-      let result: File =  this.blobToFile(blob);
+      let result: File = this.blobToFile(blob);
     } catch (e) {
       console.log(e);
     }
-    
+
     const params: UIParams = {
       method: 'share_open_graph',
       action_type: 'og.shares',
