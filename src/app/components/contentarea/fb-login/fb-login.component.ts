@@ -5,6 +5,9 @@ import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+declare var jquery: any;
+declare var $: any;
+
 @Component({
   selector: 'app-fb-login',
   templateUrl: './fb-login.component.html',
@@ -14,8 +17,10 @@ export class FbLoginComponent implements OnInit {
 
 /*===================================================MEMBER VARIABLES===============*/
   private user: User;
+  flag = false;
   private fbApi = 'https://test-205317.appspot.com';
   private gcsBucket = 'https://storage.googleapis.com/test-205317/';
+  isActive:boolean = false;
 /*===================================================CONSTRUCTOR====================*/
   constructor(
     private fb: FacebookService,
@@ -24,16 +29,35 @@ export class FbLoginComponent implements OnInit {
     private tokenService: TokenService) {
 
   this.user = new User('-', '-', '-', '-', '-', '-');
-    const initParams: InitParams = { appId: '446446099144129', xfbml: true, version: 'v3.0' };
+    const initParams: InitParams = { appId: '1251488264984736', xfbml: true, version: 'v3.0' };
 
   this.fb.init(initParams);
   }
 /*===================================================NG_ON_INIT======================*/
   ngOnInit() {
   }
+
+  /*====================================Loading icon on Login Button================ */
+  onWait() {
+    return this.flag == true ?  'on-wait' : '';
+  }
 /*===================================================LOGIN_WITH_FACEBOOK=============*/
   loginWithFacebook(): void {
-
+    this.flag = true;
+    
+    
+    
+    /*
+    $("").appendTo(".btn-fbloginbtn");
+    $( "p" ).append( "<strong>Hello</strong>" );
+    $('#loginBtn').append("fa").attr("name", "ellipsis-v").attr("animation", "spin");
+      var loadSpan = document.createElement("span").appendChild(document.createTextNode('انتظارکیجے '));
+    document.getElementById('loginBtn').appendChild(loadSpan);
+   
+    <fa name='ellipsis-v' animation='spin'></fa>
+    */
+    
+    
     const instance: FbLoginComponent = this;
 
     this.fb.login({scope: 'email,user_photos'})
@@ -55,7 +79,8 @@ newUser() {
   this.http.get(this.fbApi + '/newUser/' + this.user.userID + '/' + this.user.accessToken,
   {
      responseType: 'text'
-  })
+  }
+)
   .subscribe(
     data => {
       this.user.profilePicture =  this.gcsBucket + this.user.userID + '.jpg';

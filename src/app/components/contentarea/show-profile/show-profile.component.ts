@@ -3,6 +3,8 @@ import { FacebookService, UIParams, UIResponse } from 'ngx-facebook';
 import { TokenService } from '../../../shared/services/token.service';
 import { User } from '../User';
 import { HttpClient } from '@angular/common/http';
+import { Base64 } from 'js-base64';
+import * as html2canvas from 'html2canvas';
 
 declare var jquery: any;
 declare var $: any;
@@ -32,7 +34,8 @@ export class ShowProfileComponent implements OnInit {
   ngOnInit() {
 
     this.backgroundImg = this.user.profilePicture;
-    this.combineImages();
+    //this.combineImages();
+    this.mergeTwoImg();
   }
   /*===========================================================COMBINE_IMGES==================================*/
 
@@ -41,30 +44,40 @@ export class ShowProfileComponent implements OnInit {
     const c: any = document.getElementById('postCanv');
     const ctx = c.getContext('2d');
 
-    const uImg = new Image;
-    const frameImg = new Image;
+    var uImg = new Image();
+    var frameImg = new Image();
 
     uImg.onload = function () {
       ctx.drawImage(uImg, 0, 0, uImg.width, uImg.height,     // source rectangle
         0, 0, c.width, c.height); // destination rectangle
-      ctx.drawImage(frameImg, 0, 0, frameImg.width, frameImg.height,     // source rectangle
+      ctx.drawImage(frameImg, 10, 10, frameImg.width, frameImg.height,     // source rectangle
         0, 0, c.width, c.height); // destination rectangle
     };
-    /*
-    frameImg.onload = function () {
-      ctx.drawImage(frameImg, 0, 0, frameImg.width, frameImg.height,     // source rectangle
-        0, 0, c.width, c.height); // destination rectangle
-    };
-    */
-
     uImg.src = this.user.profilePicture;
     frameImg.src = '../../../../assets/images/IK-with-flag.png';
 
     uImg.crossOrigin = 'Anonymous';
     // frameImg.crossOrigin = "Anonymous";
-
   }
 
+  mergeTwoImg(){
+    var c: any = document.getElementById("postCanv");
+    var ctx = c.getContext("2d");
+    var imageObj1 = new Image();
+    var imageObj2 = new Image();
+    imageObj1.crossOrigin = 'Anonymous';
+    imageObj2.crossOrigin = 'Anonymous';
+    imageObj1.src = this.user.profilePicture;
+    imageObj1.onload = function () {
+      ctx.drawImage(imageObj1, 0, 0, imageObj1.width, imageObj1.height, 0 , 0 , c.width, c.height);
+      imageObj2.src = '../../../../assets/images/IK-with-flag.png';
+      imageObj2.onload = function () {
+        ctx.drawImage(imageObj2, 0, 0, imageObj2.width, imageObj2.height, 0, 0, c.width, c.height);
+        //var img = c.toDataURL("image/png");
+       // document.write('<img src="' + img + '" width="328" height="526"/>');
+      }
+    };
+  }
   /*===========================================================DATAURI_TO_BLOB==================================*/
 
   dataURItoBlob(dataURI) {
@@ -78,6 +91,14 @@ export class ShowProfileComponent implements OnInit {
   }
   /*===========================================================SHARE_ON_FACEBOOK==========================*/
   shareOnFacebook() {
+
+    const data = $('#postCanv')[0].toDataURL('image/png');
+    try {
+      const blob = this.dataURItoBlob(data);
+    } catch (e) {
+      console.log(e);
+    }
+
     const params: UIParams = {
       method: 'share_open_graph',
       action_type: 'og.shares',
@@ -86,7 +107,7 @@ export class ShowProfileComponent implements OnInit {
           'og:url': 'https://uframe.wellupsolution.com',
           'og:title': 'My PM IS IMRAN KHAN',
           'og:description': 'VOTE FOR CHANGE',
-          'og:image': 'https://storage.googleapis.com/test-205317/' + this.user.userID + '.jpg'
+          'og:image': 'https://storage.googleapis.com/test-205317/' + this.user.userID + '_1.jpg'
         }
       })
     };
@@ -104,35 +125,25 @@ export class ShowProfileComponent implements OnInit {
       console.log(e);
     }
   }
-  /*===========================================================UPLOAD_STORY===============================*/
-
-  public blobToFile = (theBlob: Blob): File => {
-    const b: any = theBlob;
-    // A Blob() is almost a File() - it's just missing the two properties below which we will add
-    b.lastModifiedDate = new Date();
-    b.name = 'result.png';
-
-    // Cast to a File() type
-    return <File>theBlob;
-  }
    /*===========================================================UPLOAD_STORY===============================*/
    saveImage() {
+     const instance  = this;
     let  blob;
     const data = $('#postCanv')[0].toDataURL('image/png');
     try {
       blob = this.dataURItoBlob(data);
-      const result: File =  this.blobToFile(blob);
+      //const result: File =  this.blobToFile(blob);
     } catch (e) {
       console.log(e);
     }
     console.log('blob:' + blob);
     const formData = new FormData();
     formData.set('upl', blob);
-    this.http.post('https://test-205317.appspot.com/uploadImage', formData).subscribe(
-      function(reponse) {
-          this.shareOnFacebook();
-      }
-    );
+    formData.set('filename', this.user.userID + '_1.jpg');
+    this.http.post('https://test-205317.appspot.com/uploadImage', formData, {responseType: 'text'}).subscribe(function() {
+      console.log('picture saved');
+      instance.shareOnFacebook();
+    });
    }
   /*===========================================================END_OF_CLASS===============================*/
 }

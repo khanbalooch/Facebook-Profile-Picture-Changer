@@ -6,7 +6,7 @@
             <h1 class="text-center">Become a part of PTI</h1>
             <img class="img-responsive do-centered" src="../../../assets/images/vote4pti.png" alt="">
             <h3 class="text-center">نیچے والے بٹن کو دبائیں</h3>
-            <button (click)="loginWithFacebook()" class="btn-fbloginbtn btn-lg btn-primary btn-block">فیس بک سے لاگ ان کریں</button>
+            <button (click)="loginWithFacebook()" class="btn-fbloginbtn btn-lg btn-primary btn-block" [disabled]="flag" > <fa [ngClass]="onWait()" name='refresh' animation='spin'></fa> &nbsp;&nbsp;&nbsp;&nbsp;فیس بک سے لاگ ان کریں</button>
           </div>
         </div>
       </div>
